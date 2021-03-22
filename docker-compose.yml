@@ -1,0 +1,34 @@
+version: '3'
+services:
+  datadog-agent:
+    image: datadog/agent:latest
+    env_file:
+      - ~/sandbox.docker.env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+    ports:
+      - 8126:8126/tcp
+    environment:
+      - DD_APM_ENABLED=true
+      - DD_APM_NON_LOCAL_TRAFFIC=true
+      - DD_LOG_LEVEL=INFO
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+      - DD_AC_EXCLUDE=name:datadog-agent
+  web:
+    build: .
+    labels: 
+       com.datadoghq.tags.env: development
+       com.datadoghq.tags.service: phptest
+       com.datadoghq.tags.version: "1.0.0"
+    volumes:
+      - ./data:/home/data
+    ports:
+      - 8080:80
+    environment:
+      - DD_AGENT_HOST=datadog-agent
+      - DD_TRACE_DEBUG=true
+    depends_on:
+      - datadog-agent
