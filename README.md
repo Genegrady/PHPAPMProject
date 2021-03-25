@@ -53,36 +53,29 @@ Once you're done, run this command to spin up the containers:
 ```
 
 ### Step 4: Generate traces from the App
-Exec into the application container in a separate terminal
-
-```
-docker exec -it php_codeigniter_sandbox_web_1 bash 
-```
-
-cd into the application:
-
-```
-cd ci-news
-```
-
-Run the application with the following command:
-
-```
-php spark serve
-```
 
 Go to your browser and check for:
 
 ```
-localhost:8080
+ https://localhost:8080 
 ```
 
 Traces should appear in your sandbox
 
 Note: Codeigniter is not supported for automatic instrumentation. Any method level calls will need to be custom instrumented in order to be seen in APM
+
 ### Step 6: Spin down containers
 
 ```
 docker-compose down
 ```
+### Resources
+
+Codeigniter Quickstart: https://codeigniter.com/user_guide/tutorial/index.html#build-your-first-application 
+PHP 7.3.0 Documentation: https://www.php.net/releases/7_3_0.php 
+
+### Coming Soon
+
+Custom Instrumentation Examples
+Updated Web Application at https://localhost:8080 
 

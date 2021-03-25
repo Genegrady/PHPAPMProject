@@ -31,3 +31,8 @@ RUN apt-get clean \
 VOLUME /var/www/html
 
 RUN get_latest_release() { wget -qO- "https://api.github.com/repos/$1/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/';} && DD_LATEST_PHP_VERSION="$(get_latest_release DataDog/dd-trace-php)" &&  wget -q https://github.com/DataDog/dd-trace-php/releases/download/${DD_LATEST_PHP_VERSION}/datadog-php-tracer_${DD_LATEST_PHP_VERSION}_amd64.deb && dpkg -i datadog-php-tracer_${DD_LATEST_PHP_VERSION}_amd64.deb
+
+
+#RUN docker exec -it php_codeigniter_sandbox_web_1 bash
+
+#RUN cd ci-news && php spark serve
